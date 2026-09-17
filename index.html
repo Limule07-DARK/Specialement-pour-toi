@@ -1,0 +1,15 @@
+<h1>Bienvenue</h1>
+<p>un petit endroit reservé specialement pour toi</p>
+<button id="oui">oui</button>
+<button id="non">non</button>
+
+
+<script>
+const non = document.getElementById("non");
+non.addEventListener("mouseover", function() {
+  const x = Math.radom() * ()window.innerWdth - 150);
+  const y = Math.radom() * ()window.innerHeight 80);
+  non.style.position = "fixed";
+  non.style.left = x + "px";
+  non.style.top = y + "px";
+});
