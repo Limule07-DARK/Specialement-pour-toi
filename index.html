@@ -1,15 +1,127 @@
-<h1>Bienvenue</h1>
-<p>un petit endroit reservé specialement pour toi</p>
-<button id="oui">oui</button>
-<button id="non">non</button>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tir au But : Penalty vs Gardien Pro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #1e3a1e;
+      color: #ffffff;
+      padding-top: 30px;
+    }
+    .stade {
+      background: #2e7d32;
+      display: inline-block;
+      padding: 20px;
+      border-radius: 12px;
+      border: 4px solid #ffffff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      width: 90%;
+      max-width: 400px;
+    }
+    .cage {
+      background-color: #1b5e20;
+      border: 6px solid #ffffff;
+      border-bottom: none;
+      height: 120px;
+      margin: 10px auto;
+      position: relative;
+      border-radius: 4px 4px 0 0;
+    }
+    #gardien {
+      font-size: 40px;
+      position: absolute;
+      bottom: 0;
+      left: 42%;
+      transition: all 0.3s ease;
+    }
+    .tirs-zone {
+      margin-top: 25px;
+    }
+    button {
+      background-color: #fbc02d;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      padding: 12px 18px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #fff;
+    }
+    #resultat {
+      font-size: 20px;
+      font-weight: bold;
+      height: 30px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
 
+  <div class="stade">
+    <h1>⚽ Seance de Penaltys</h1>
+    <p>Score : <span id="marques">0</span> Buts | Arrêts : <span id="arretes">0</span></p>
 
-<script>
-const non = document.getElementById("non");
-non.addEventListener("mouseover", function() {
-  const x = Math.radom() * ()window.innerWdth - 150);
-  const y = Math.radom() * ()window.innerHeight 80);
-  non.style.position = "fixed";
-  non.style.left = x + "px";
-  non.style.top = y + "px";
-});
+    <!-- La cage et le gardien -->
+    <div class="cage">
+      <div id="gardien">🧤</div>
+    </div>
+
+    <!-- Message de résultat -->
+    <div id="resultat">Choisis où tirer !</div>
+
+    <!-- Les boutons de tir -->
+    <div class="tirs-zone">
+      <button onclick="tirer('gauche')">⬅️ Gauche</button>
+      <button onclick="tirer('centre')">⬆️ Centre</button>
+      <button onclick="tirer('droite')">➡️ Droite</button>
+    </div>
+  </div>
+
+  <script>
+    let buts = 0;
+    let arretes = 0;
+
+    function tirer(coteJoueur) {
+      const cotes = ['gauche', 'centre', 'droite'];
+      // Le gardien choisit un côté au hasard
+      const coteGardien = cotes[Math.floor(Math.random() * 3)];
+      
+      const elGardien = document.getElementById("gardien");
+      const elResultat = document.getElementById("resultat");
+
+      // Déplacer visuellement le gardien
+      if (coteGardien === 'gauche') elGardien.style.left = "5%";
+      if (coteGardien === 'centre') elGardien.style.left = "42%";
+      if (coteGardien === 'droite') elGardien.style.left = "80%";
+
+      // Vérification du tir
+      if (coteJoueur === coteGardien) {
+        arretes++;
+        elResultat.innerText = "🛑 ARRÊTÉ ! Le gardien l'a capté !";
+        elResultat.style.color = "#ff5252";
+      } else {
+        buts++;
+        elResultat.innerText = "⚽ GOAAAL ! C'est au fond !";
+        elResultat.style.color = "#69f0ae";
+      }
+
+      // Mettre à jour les scores
+      document.getElementById("marques").innerText = buts;
+      document.getElementById("arretes").innerText = arretes;
+    }
+  </script>
+
+</body>
+</html>
+
+Envoyer un message…
+
