@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Une question très importante...</title>
-  <!-- Importation d'une belle police Google -->
+  <!-- Importation de la police Google Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -25,6 +25,7 @@
     }
 
     .card {
+      position: relative; /* Indispensable pour garder le bouton enfermé dedans */
       background: rgba(255, 255, 255, 0.95);
       padding: 40px 30px;
       border-radius: 20px;
@@ -32,6 +33,7 @@
       text-align: center;
       max-width: 420px;
       width: 90%;
+      min-height: 320px;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       animation: fadeIn 0.8s ease-out;
@@ -52,10 +54,10 @@
 
     .btn-container {
       position: relative;
-      height: 60px;
+      height: 100px;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       gap: 20px;
     }
 
@@ -68,7 +70,7 @@
       border-radius: 12px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.15s ease, left 0.15s ease, top 0.15s ease;
     }
 
     #btn-oui {
@@ -84,7 +86,7 @@
     #btn-non {
       background: linear-gradient(135deg, #ff416c, #ff4b2b);
       color: white;
-      z-index: 1000;
+      position: absolute;
     }
 
     @keyframes fadeIn {
@@ -101,7 +103,7 @@
 </head>
 <body>
 
-  <div class="card">
+  <div class="card" id="card">
     <div class="icon-box">🏍️💨</div>
     <h1>Allez-vous acheter la Winner X à Fadel ?</h1>
     
@@ -112,17 +114,27 @@
   </div>
 
   <script>
-    function fuir() {
+    // Repositionne le bouton NON au départ
+    window.onload = function() {
       const btnNon = document.getElementById("btn-non");
-      
-      // Calcul d'une position aléatoire dans l'écran
-      const maxX = window.innerWidth - btnNon.offsetWidth - 20;
-      const maxY = window.innerHeight - btnNon.offsetHeight - 20;
+      const btnOui = document.getElementById("btn-oui");
+      btnNon.style.left = (btnOui.offsetLeft + btnOui.offsetWidth + 20) + "px";
+      btnNon.style.top = btnOui.offsetTop + "px";
+    };
 
-      const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-      const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+    function fuir() {
+      const card = document.getElementById("card");
+      const btnNon = document.getElementById("btn-non");
 
-      btnNon.style.position = "fixed";
+      // Limites intérieures du carré blanc (avec marge de sécurité)
+      const padding = 20;
+      const maxX = card.clientWidth - btnNon.offsetWidth - padding;
+      const maxY = card.clientHeight - btnNon.offsetHeight - padding;
+
+      // Génération de coordonnées uniquement dans le carré blanc
+      const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+      const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
       btnNon.style.left = randomX + "px";
       btnNon.style.top = randomY + "px";
     }
